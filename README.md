@@ -1,0 +1,1 @@
+# anime_manage_app
