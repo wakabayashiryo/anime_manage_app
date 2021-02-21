@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'dart:developer';
 import 'history.dart';
 import 'favorites.dart';
 import 'weekly_schedule.dart';
+import 'setting.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,7 +11,8 @@ class MyApp extends StatelessWidget {
   final Map<String, Widget> _pagesList = {
     'schedule': Schedule(),
     'favorites': Favorites(),
-    'history': ViewdHistory()
+    'history': ViewdHistory(),
+    'Setting': Setting()
   };
 
   @override
@@ -41,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     // TODO: implement initState
     _showPage = widget.pages['schedule'];
-    for (var key in widget.pages.keys) _pageKeyList.add('${key}');
+    for (var key in widget.pages.keys) _pageKeyList.add(key);
     super.initState();
   }
 
@@ -62,7 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Container(
-                height: MediaQuery.of(context).size.height * 0.25,
+                height: double.maxFinite,
+                // height: MediaQuery.of(context).size.height * 0.25,
                 padding: EdgeInsets.all(5),
                 child: ListView.builder(
                     itemCount: _pageKeyList.length,
@@ -70,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       return ListTile(
                         title: Text('${_pageKeyList[index]}'),
                         onTap: () {
-                          _selectPageTapped('${_pageKeyList[index]}');
+                          _pageListTapped('${_pageKeyList[index]}');
                         },
                       );
                     })),
@@ -97,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _selectPageTapped(String index) {
+  void _pageListTapped(String index) {
     setState(() {
       Navigator.pop(context);
       _showPage = widget.pages[index];
