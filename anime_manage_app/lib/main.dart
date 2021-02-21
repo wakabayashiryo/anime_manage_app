@@ -1,67 +1,55 @@
 import 'package:flutter/material.dart';
 import 'history.dart';
+import 'favorites.dart';
+import 'weekly_schedule.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  final Map<String, Widget> _pagesList = {
+    'schedule': Schedule(),
+    'favorites': Favorites(),
+    'history': ViewdHistory()
+  };
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Anime Manager(Beta)',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      debugShowCheckedModeBanner :true,
-      home: MyHomePage(title: 'Ani Mane(beta)'),
-    );
+        title: 'Anime Manager(Beta)',
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ),
+        debugShowCheckedModeBanner: true,
+        home: MyHomePage(pages: _pagesList));
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key key, this.pages}) : super(key: key);
 
-  final String title;
+  final Map<String, Widget> pages;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 2000;
+  Widget _showPage;
+  List<String> _pageKeyList = [];
 
-  void _incrementCounter() {
-    setState(() {
-      if (_selectedIndex < 2)
-        _selectedIndex = _selectedIndex + 1;
-      else
-        _selectedIndex = 0;
-    });
+  @override
+  void initState() {
+    // TODO: implement initState
+    _showPage = widget.pages['schedule'];
+    for (var key in widget.pages.keys) _pageKeyList.add('${key}');
+    super.initState();
   }
-
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static List<Widget> _widgetOptions = <Widget>[
-    Center(
-        child: Text(
-      'Home',
-      textAlign: TextAlign.center,
-      style: optionStyle,
-    )),
-    ViewdHistory(),
-    Center(
-        child: Text(
-      'Setting Page',
-      textAlign: TextAlign.center,
-      style: optionStyle,
-    )),
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Anime Manager(Beta)'),
       ),
       drawer: Drawer(
         child: ListView(
@@ -73,51 +61,46 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.lightGreen,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(5),
-              child: ListTile(
-                title: Text('Item 1'),
-                onTap: () {
-                  // Update the state of the app.
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(5),
-              child: ListTile(
-                title: Text('Item 1'),
-                onTap: () {
-                  // Update the state of the app.
-                  Navigator.pop(context);
-                },
-              ),
-            )
+            Container(
+                height: MediaQuery.of(context).size.height * 0.25,
+                padding: EdgeInsets.all(5),
+                child: ListView.builder(
+                    itemCount: _pageKeyList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        title: Text('${_pageKeyList[index]}'),
+                        onTap: () {
+                          _selectPageTapped('${_pageKeyList[index]}');
+                        },
+                      );
+                    })),
           ],
         ),
       ),
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setting'),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber,
-        onTap: _onItemTapped,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.arrow_right),
-      ),
+      body: _showPage,
+
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: const <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setting'),
+      //   ],
+      //   currentIndex: _selectedIndex,
+      //   selectedItemColor: Colors.amber,
+      //   onTap: _onItemTapped,
+      // ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: Icon(Icons.arrow_right),
+      // ),
     );
   }
 
-  void _onItemTapped(int index) {
+  void _selectPageTapped(String index) {
     setState(() {
-      _selectedIndex = index;
+      Navigator.pop(context);
+      _showPage = widget.pages[index];
     });
   }
 } /**/
