@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'dart:developer';
 import 'history.dart';
 import 'favorites.dart';
-import 'weekly_schedule.dart';
+import 'program_checklist.dart';
 import 'setting.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   final Map<String, Widget> _pagesList = {
-    'schedule': Schedule(),
+    'Program Checklist': ProgramChecklists(),
     'favorites': Favorites(),
     'history': ViewdHistory(),
     'Setting': Setting()
@@ -43,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     // TODO: implement initState
-    _showPage = widget.pages['schedule'];
+    _showPage = widget.pages['Program Checklist'];
     for (var key in widget.pages.keys) _pageKeyList.add(key);
     super.initState();
   }
