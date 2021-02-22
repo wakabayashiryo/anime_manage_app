@@ -7,6 +7,15 @@ class ProgramChecklists extends StatefulWidget {
 }
 
 class _ProgramChecklistsState extends State<ProgramChecklists> {
+  bool _checked;
+
+  @override
+  void initState() {
+    _checked = true;
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -21,14 +30,13 @@ class _ProgramChecklistsState extends State<ProgramChecklists> {
               indicatorColor: Colors.white,
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorWeight: 2.5,
-              indicatorPadding: EdgeInsets.all(1),
+              indicatorPadding: EdgeInsets.all(5),
               isScrollable: true,
               labelColor: Colors.white,
               labelPadding: EdgeInsets.all(10),
-              labelStyle: TextStyle(fontSize: 20.0),
+              labelStyle: TextStyle(fontSize: 17.0),
               unselectedLabelColor: Colors.white,
               unselectedLabelStyle: TextStyle(fontSize: 14.0),
-
               tabs: [
                 Text(('日曜日')),
                 Text(('月曜日')),
@@ -42,12 +50,27 @@ class _ProgramChecklistsState extends State<ProgramChecklists> {
           ),
           body: TabBarView(
             children: [
-              CheckboxListTile(
-                  title: Text('test'),
-                  secondary: Icon(Icons.beach_access),
-                  onChanged: null,
-                  value: true,
+              ListView.builder(
+                  padding: const EdgeInsets.all(8),
+                  itemCount: 10,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CheckboxListTile(
+                      title: Text('test'),
+                      subtitle: Text('hoge'),
+                      secondary: Icon(Icons.beach_access),
+                      controlAffinity: ListTileControlAffinity.platform,
+                      onChanged: (bool value) {
+                        setState(() {
+                          _checked = value;
+                        });
+                      },
+                      value: _checked,
+                      activeColor: Colors.green,
+                      checkColor: Colors.white,
+                    );
+                  }
               ),
+
               CheckboxListTile(
                 title: Text('test'),
                 secondary: Icon(Icons.beach_access),
@@ -86,8 +109,6 @@ class _ProgramChecklistsState extends State<ProgramChecklists> {
               ),
             ],
           ),
-        )
-    );
+        ));
   }
 }
-
