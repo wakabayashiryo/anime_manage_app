@@ -7,19 +7,10 @@ class ProgramChecklists extends StatefulWidget {
 }
 
 class _ProgramChecklistsState extends State<ProgramChecklists> {
-  bool _checked;
-
-  @override
-  void initState() {
-    _checked = true;
-    // TODO: implement initState
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        initialIndex: 3,
+        initialIndex: 0,
         length: 7,
         child: Scaffold(
           appBar: AppBar(
@@ -54,23 +45,16 @@ class _ProgramChecklistsState extends State<ProgramChecklists> {
                   padding: const EdgeInsets.all(8),
                   itemCount: 10,
                   itemBuilder: (BuildContext context, int index) {
-                    return CheckboxListTile(
-                      title: Text('test'),
-                      subtitle: Text('hoge'),
-                      secondary: Icon(Icons.beach_access),
-                      controlAffinity: ListTileControlAffinity.platform,
-                      onChanged: (bool value) {
-                        setState(() {
-                          _checked = value;
+                    return ListTile(
+                        leading: Icon(Icons.beach_access),
+                        title: Text('hoge'),
+                        subtitle: Text('hoge'),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute<void>(
+                            builder: (BuildContext context) => _checkboxList(),
+                          ));
                         });
-                      },
-                      value: _checked,
-                      activeColor: Colors.green,
-                      checkColor: Colors.white,
-                    );
-                  }
-              ),
-
+                  }),
               CheckboxListTile(
                 title: Text('test'),
                 secondary: Icon(Icons.beach_access),
@@ -110,5 +94,43 @@ class _ProgramChecklistsState extends State<ProgramChecklists> {
             ],
           ),
         ));
+  }
+}
+
+class _checkboxList extends StatefulWidget {
+  @override
+  __checkboxListState createState() => __checkboxListState();
+}
+
+class __checkboxListState extends State<_checkboxList> {
+  bool _checked;
+
+  @override
+  void initState() {
+    _checked = true;
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title:Text('test')
+        ),
+        body: CheckboxListTile(
+          title: Text('test'),
+          subtitle: Text('hoge'),
+          secondary: Icon(Icons.beach_access),
+          controlAffinity: ListTileControlAffinity.platform,
+          onChanged: (bool value) {
+            setState(() {
+              _checked = value;
+            });
+          },
+          value: _checked,
+          activeColor: Colors.green,
+          checkColor: Colors.white,
+    ));
   }
 }
