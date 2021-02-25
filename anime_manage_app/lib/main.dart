@@ -4,6 +4,7 @@ import 'history.dart';
 import 'favorites.dart';
 import 'weekly_schedule.dart';
 import 'setting.dart';
+import 'database.dart';
 
 void main() => runApp(MyApp());
 
@@ -42,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    test();
     // TODO: implement initState
     _showPage = widget.pages['schedule'];
     for (var key in widget.pages.keys) _pageKeyList.add(key);
