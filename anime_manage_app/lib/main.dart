@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'history.dart';
-import 'favorites.dart';
-import 'program_checklist.dart';
-import 'setting.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   final Map<String, Widget> _pagesList = {
-    'Program Checklist': ProgramChecklists(),
-    'favorites': Favorites(),
     'history': ViewdHistory(),
-    'Setting': Setting()
   };
 
   @override
