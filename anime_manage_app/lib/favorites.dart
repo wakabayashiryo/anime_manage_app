@@ -1,23 +1,39 @@
 import 'package:flutter/material.dart';
 
-class Favorites extends StatefulWidget {
-  @override
-  _FavoritesState createState() => _FavoritesState();
-}
+/*
+TODO
+ - Share TileCard widget with WatchList.dart
+ - Sort lists by several patterns
+ - from this list, can add watch list
+ */
 
-class _FavoritesState extends State<Favorites> {
+class Favorites extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:Center(
-        child: Text(
-          'Favorites',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-        ),
+      appBar: AppBar(
+        title: Text('Favorites'),
       ),
+      body: ListView.builder(
+          itemCount: 15,
+          itemBuilder: (BuildContext context, int index) {
+            return tileCard(context, index);
+          }),
     );
   }
 }
 
-
+Widget tileCard(BuildContext context, int _index) {
+  _index++;
+  return ListTile(
+      leading: Icon(Icons.picture_in_picture),
+      // This icon mean that thumbnail will put here
+      title: Text('Story of Monster by Nishio Ishin'),
+      //This Title of Story
+      subtitle: Text('Spring 2021'),
+      //The Air Date
+      trailing: Icon(Icons.favorite),
+      //favorite icon
+      onTap: () {}
+      );
+} //decoy func
