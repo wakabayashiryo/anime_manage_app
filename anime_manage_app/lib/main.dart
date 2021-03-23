@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'program_checklist.dart';
+=======
+import 'dart:developer';
+import 'history.dart';
+import 'favorites.dart';
+import 'weekly_schedule.dart';
+import 'setting.dart';
+import 'database.dart';
+>>>>>>> database
 
 void main() => runApp(MyApp());
 
@@ -35,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    test();
     // TODO: implement initState
     _showPage = widget.pages['Program Checklist'];
     for (var key in widget.pages.keys) _pageKeyList.add(key);
