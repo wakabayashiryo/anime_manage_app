@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'programInformation.dart';
 
 /*
 TODO
@@ -23,17 +24,3 @@ class Favorites extends StatelessWidget {
   }
 }
 
-Widget tileCard(BuildContext context, int _index) {
-  _index++;
-  return ListTile(
-      leading: Icon(Icons.picture_in_picture),
-      // This icon mean that thumbnail will put here
-      title: Text('Story of Monster by Nishio Ishin'),
-      //This Title of Story
-      subtitle: Text('Spring 2021'),
-      //The Air Date
-      trailing: Icon(Icons.favorite),
-      //favorite icon
-      onTap: () {}
-      );
-} //decoy func

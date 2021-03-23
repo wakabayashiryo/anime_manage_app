@@ -1,6 +1,6 @@
-import 'package:anime_manage_app/favorites.dart';
+import 'package:anime_manage_app/listBuilding.dart';
 import 'package:flutter/material.dart';
-import 'favorites.dart';
+import 'listBuilding.dart';
 
 void main () => runApp(MyApp());
 
