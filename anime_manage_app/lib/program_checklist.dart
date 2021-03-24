@@ -51,7 +51,7 @@ class _ProgramChecklistsState extends State<ProgramChecklists> {
                         subtitle: Text('hoge'),
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute<void>(
-                            builder: (BuildContext context) => _checkboxList(),
+                            builder: (BuildContext context) => _CheckboxList(),
                           ));
                         });
                   }),
@@ -97,13 +97,13 @@ class _ProgramChecklistsState extends State<ProgramChecklists> {
   }
 }
 
-class _checkboxList extends StatefulWidget {
+class _CheckboxList extends StatefulWidget {
   @override
-  __checkboxListState createState() => __checkboxListState();
+  __CheckboxListState createState() => __CheckboxListState();
 }
 
-class __checkboxListState extends State<_checkboxList> {
-  bool _checked;
+class __CheckboxListState extends State<_CheckboxList> {
+  bool? _checked;
 
   @override
   void initState() {
@@ -123,7 +123,7 @@ class __checkboxListState extends State<_checkboxList> {
           subtitle: Text('hoge'),
           secondary: Icon(Icons.beach_access),
           controlAffinity: ListTileControlAffinity.platform,
-          onChanged: (bool value) {
+          onChanged: (bool? value) {
             setState(() {
               _checked = value;
             });

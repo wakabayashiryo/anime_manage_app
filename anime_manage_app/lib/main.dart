@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'program_checklist.dart';
-=======
-import 'dart:developer';
-import 'history.dart';
-import 'favorites.dart';
-import 'weekly_schedule.dart';
-import 'setting.dart';
+import 'seedData.dart';
 import 'database.dart';
->>>>>>> database
 
 void main() => runApp(MyApp());
 
@@ -30,24 +23,24 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.pages}) : super(key: key);
+  MyHomePage({Key? key, this.pages}) : super(key: key);
 
-  final Map<String, Widget> pages;
+  final Map<String, Widget>? pages;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Widget _showPage;
+  Widget? _showPage;
   List<String> _pageKeyList = [];
 
   @override
   void initState() {
-    test();
+    initialData();
     // TODO: implement initState
-    _showPage = widget.pages['Program Checklist'];
-    for (var key in widget.pages.keys) _pageKeyList.add(key);
+    _showPage = widget.pages?['Program Checklist'];
+    for (var key in widget.pages!.keys) _pageKeyList.add(key);
     super.initState();
   }
 
@@ -107,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _pageListTapped(String index) {
     setState(() {
       Navigator.pop(context);
-      _showPage = widget.pages[index];
+      _showPage = widget.pages?[index];
     });
   }
 } /**/

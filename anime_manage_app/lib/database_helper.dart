@@ -7,18 +7,18 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class DatabaseHelper {
-  String tableName;
-  int version = 1;
-  String tableStructure;
+  String? tableName;
+  int? version = 1;
+  String? tableStructure;
 
   DatabaseHelper._createInstance(
       {@required this.tableName, this.version, @required this.tableStructure});
 
   static final DatabaseHelper helperInstance = DatabaseHelper._createInstance();
 
-  static Database _database;
+  static Database? _database;
 
-  Future<Database> get database async {
+  Future<Database?> get database async {
     if (_database != null) return _database;
 
     _database = await _initDatabase();
@@ -40,21 +40,19 @@ class DatabaseHelper {
           ''');
   }
 
-  Future <int> insert(Map<String, dynamic> row) async {
-    Database db = await helperInstance.database;
-    return await db.insert(tableName, row);
+  Future<int?> insert(Map<String, dynamic> row) async {
+    Database? db = await helperInstance.database;
+    return await db!.insert(tableName!, row);
   }
 
   Future<List<Map<String, dynamic>>> queryAllRows() async {
-    Database db = await helperInstance.database;
-    return await db.query(tableName);
+    Database? db = await helperInstance.database;
+    return await db!.query(tableName!);
   }
 
-  Future<int> queryRowCount() async {
-    Database db = await helperInstance.database;
+  Future<int?> queryRowCount() async {
+    Database? db = await helperInstance.database;
     return Sqflite.firstIntValue(
-        await db.rawQuery('SELECT COUNT(*) FROM $tableName'));
+        await db!.rawQuery('SELECT COUNT(*) FROM $tableName'));
   }
-
-  
 }

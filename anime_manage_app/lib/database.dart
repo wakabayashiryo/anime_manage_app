@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:sqflite/sqflite.dart' as sqflite;
 import 'package:path/path.dart' as path;
 
 void test() async {
-  final Map<String,dynamic> name1 = {'id':0,'first':'Wakabayashi','last':'Ryo'};
 
   final databaseName = 'hoge.db';
   final databasePath = await sqflite.getDatabasesPath();
@@ -26,5 +23,19 @@ void test() async {
   final List<Map<String,dynamic>> gotName = await database.query('name');
   print(gotName[0]);
   print(databasePath);
-
 }
+
+class ProgramInformation{
+  String? title;
+  int? totalEpisode;
+  int? weekDays;
+  List<bool>? progress;
+
+  @override
+  String toString() {
+    return '{ ${this.title}, ${this.weekDays}, ${this.totalEpisode}, ${this.progress} }';
+  }
+
+  ProgramInformation({this.title,this.weekDays,this.totalEpisode,this.progress});
+}
+
