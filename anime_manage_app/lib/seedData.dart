@@ -53,7 +53,9 @@ void initialData(){
   seedData.add(ProgramInformation(title:'<物語>シリーズ　セカンドシーズン', weekDays: DateTime.saturday,totalEpisode:12,progress: List<bool>.filled(12, false)));
   seedData.add(ProgramInformation(title:'蜘蛛ですが、なにか?', weekDays: DateTime.saturday,totalEpisode:12,progress: List<bool>.filled(12, false)));
 
-  print(seedData);
-  print(seedData.length);
+  print(seedData.where((element) => element.weekDays == DateTime.sunday));
+
+  // print(seedData);
+  // print(seedData.length);
 }
 
