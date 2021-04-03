@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -12,7 +10,7 @@ class DatabaseHelper {
   String? tableStructure;
 
   DatabaseHelper._createInstance(
-      {@required this.tableName, this.version, @required this.tableStructure});
+      {this.tableName, this.version, this.tableStructure});
 
   static final DatabaseHelper helperInstance = DatabaseHelper._createInstance();
 

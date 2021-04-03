@@ -1,13 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'database.dart';
 import 'seedData.dart';
 
-class ProgramChecklists extends StatefulWidget {
-  @override
-  _ProgramChecklistsState createState() => _ProgramChecklistsState();
-}
-
-class _ProgramChecklistsState extends State<ProgramChecklists> {
+class ProgramChecklists extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -16,7 +12,7 @@ class _ProgramChecklistsState extends State<ProgramChecklists> {
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            // backgroundColor: Colors.gree,
+            //backgroundColor: Colors.green,
             title: TabBar(
               dragStartBehavior: DragStartBehavior.down,
               indicatorColor: Colors.white,
@@ -41,97 +37,72 @@ class _ProgramChecklistsState extends State<ProgramChecklists> {
             ),
           ),
           body: TabBarView(
-            children: [
-              ListView.builder(
-                  padding: const EdgeInsets.all(8),
-                  itemCount: 10,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                        leading: Icon(Icons.beach_access),
-                        title: Text('hoge'),
-                        subtitle: Text('hoge'),
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute<void>(
-                            builder: (BuildContext context) => _CheckboxList(),
-                          ));
-                        });
-                  }),
-              CheckboxListTile(
-                title: Text('test'),
-                secondary: Icon(Icons.beach_access),
-                onChanged: null,
-                value: true,
-              ),
-              CheckboxListTile(
-                title: Text('test'),
-                secondary: Icon(Icons.beach_access),
-                onChanged: null,
-                value: true,
-              ),
-              CheckboxListTile(
-                title: Text('test'),
-                secondary: Icon(Icons.beach_access),
-                onChanged: null,
-                value: true,
-              ),
-              CheckboxListTile(
-                title: Text('test'),
-                secondary: Icon(Icons.beach_access),
-                onChanged: null,
-                value: true,
-              ),
-              CheckboxListTile(
-                title: Text('test'),
-                secondary: Icon(Icons.beach_access),
-                onChanged: null,
-                value: true,
-              ),
-              CheckboxListTile(
-                title: Text('test'),
-                secondary: Icon(Icons.beach_access),
-                onChanged: null,
-                value: true,
-              ),
+            children: <Widget>[
+              programListWeekDay(DateTime.sunday),
+              programListWeekDay(DateTime.monday),
+              programListWeekDay(DateTime.tuesday),
+              programListWeekDay(DateTime.wednesday),
+              programListWeekDay(DateTime.thursday),
+              programListWeekDay(DateTime.friday),
+              programListWeekDay(DateTime.saturday)
             ],
           ),
         ));
   }
 }
 
-class _CheckboxList extends StatefulWidget {
-  @override
-  __CheckboxListState createState() => __CheckboxListState();
+Widget programListWeekDay(int? weekday) {
+  final List<ProgramInformation> _filterd =
+      seedData.where((element) => element.weekDays == weekday).toList();
+
+  return ListView.builder(
+      padding: const EdgeInsets.all(8),
+      itemCount: _filterd.length,
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+            leading: Icon(Icons.beach_access), //<=change TV icon
+            title: Text("${_filterd[index].title}"),
+            subtitle: Text('Total Episodes ${_filterd[index].totalEpisode}'),
+            trailing: Icon(Icons.favorite),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute<void>(
+                builder: (BuildContext context) =>
+                    _CheckboxList(contentInfo: _filterd[index]),
+              ));
+            });
+      });
 }
 
-class __CheckboxListState extends State<_CheckboxList> {
-  bool? _checked;
+class _CheckboxList extends StatelessWidget {
+  ProgramInformation contentInfo;
 
-  @override
-  void initState() {
-    _checked = true;
-    // TODO: implement initState
-    super.initState();
-  }
+  _CheckboxList({required this.contentInfo});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title:Text('test')
-        ),
-        body: CheckboxListTile(
-          title: Text('test'),
-          subtitle: Text('hoge'),
-          secondary: Icon(Icons.beach_access),
-          controlAffinity: ListTileControlAffinity.platform,
-          onChanged: (bool? value) {
-            setState(() {
-              _checked = value;
-            });
-          },
-          value: _checked,
-          activeColor: Colors.green,
-          checkColor: Colors.white,
-    ));
+        appBar: AppBar(title: Text(contentInfo.title!)),
+        body: ListView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: contentInfo.progress!.length,
+            itemBuilder: (BuildContext context, int index) {
+              return CheckboxListTile(
+                title: Text('Episode ${index + 1}'),
+                // subtitle: Text('hoge'),
+                secondary: Icon(Icons.beach_access),
+                controlAffinity: ListTileControlAffinity.platform,
+                onChanged: (bool? value) {
+                  print("${contentInfo.progress![index]}\n");
+                  if (value!)
+                    contentInfo.progress![index] = false;
+                  else
+                    contentInfo.progress![index] = true;
+                  print("${contentInfo.progress![index]}\n");
+                },
+                value: contentInfo.progress![index],
+                activeColor: Colors.green,
+                checkColor: Colors.white,
+              );
+            }));
   }
 }
