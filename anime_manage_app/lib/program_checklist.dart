@@ -67,16 +67,16 @@ Widget programListWeekDay(int? weekday) {
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute<void>(
                 builder: (BuildContext context) =>
-                    _CheckboxList(contentInfo: _filterd[index]),
+                    _CheckboxListPage(contentInfo: _filterd[index]),
               ));
             });
       });
 }
 
-class _CheckboxList extends StatelessWidget {
+class _CheckboxListPage extends StatelessWidget {
   ProgramInformation contentInfo;
 
-  _CheckboxList({required this.contentInfo});
+  _CheckboxListPage({required this.contentInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -105,4 +105,8 @@ class _CheckboxList extends StatelessWidget {
               );
             }));
   }
+}
+
+class checkBoxTiles with ChangeNotifier{
+
 }

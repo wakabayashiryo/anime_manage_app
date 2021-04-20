@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'program_checklist.dart';
 import 'seedData.dart';
 import 'database.dart';
@@ -12,13 +13,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+      child:MaterialApp(
         title: 'Anime Manager(Beta)',
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
         debugShowCheckedModeBanner: true,
-        home: MyHomePage(pages: _pagesList));
+        home: MyHomePage(pages: _pagesList)),
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => CheckboxList(),
+            )
+        ],
+    );
   }
 }
 
