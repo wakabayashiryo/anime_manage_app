@@ -1,32 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => Counter())
-      ],
-      child: new MyApp())
-);
+void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Flutter Demo',
-      theme: new ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
-        // counter didn't reset back to zero; the application is not restarted.
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      child: new MaterialApp(
+        title: 'Flutter Demo',
+        theme: new ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
+          // counter didn't reset back to zero; the application is not restarted.
+          primarySwatch: Colors.blue,
+        ),
+        home: new MyHomePage('Flutter Hello World'),
       ),
-      home: new MyHomePage('Flutter Hello World'),
+      providers: [ChangeNotifierProvider(create: (_) => CounterModel())],
     );
   }
 }
@@ -77,7 +74,7 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: new FloatingActionButton(
-        onPressed: () => context.read<Counter>().increment(),
+        onPressed: () => context.read<CounterModel>().increment(),
         tooltip: 'Increment',
         child: new Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
@@ -85,24 +82,34 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class Counter with ChangeNotifier{
-  int _count = 0;
-  int get count => _count;
+// This class is count object
+class StoreCount {
+  StoreCount(this.counter);
+  int counter;
+}
 
-  void increment(){
-    _count++;
+// Model of Coutner for operating counter object
+class CounterModel with ChangeNotifier {
+  StoreCount _count = StoreCount(0);
+
+  int get count => _count.counter;
+
+  void increment() {
+    _count.counter++;
     notifyListeners();
   }
 }
 
+//Refresh Widget content when received notify of update from notifyListeners()
 class Count extends StatelessWidget {
-  const Count({Key key}):super(key:key);
+  const Count({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
-    return Text(
-        '${context.watch<Counter>().count}',
-         style: Theme.of(context).textTheme.headline4
-    );
+  Widget build(BuildContext context) {
+    return Consumer<CounterModel>(
+        builder: (BuildContext context, CounterModel value, Widget child) {
+      return Text('${context.watch<CounterModel>().count}',
+          style: Theme.of(context).textTheme.headline4);
+    });
   }
 }
