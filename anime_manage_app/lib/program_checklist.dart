@@ -68,16 +68,16 @@ Widget programListWeekDay(BuildContext context, int? weekday) {
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute<void>(
                 builder: (BuildContext context) =>
-                    _checkboxListPage(contentInfo: _titleList?[index]),
+                    _CheckboxListPage(contentInfo: _titleList?[index]),
               ));
             });
       });
 }
 
-class _checkboxListPage extends StatelessWidget {
-  ProgramInformation? contentInfo;
+class _CheckboxListPage extends StatelessWidget {
+  final ProgramInformation? contentInfo;
 
-  _checkboxListPage({required this.contentInfo});
+  _CheckboxListPage({required this.contentInfo});
 
   @override
   Widget build(BuildContext context) {

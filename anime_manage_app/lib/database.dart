@@ -43,6 +43,7 @@ class ProgramInformation {
 class ProgramInfoModel with ChangeNotifier {
   List<ProgramInformation> _seedData = [];
 
+  //initialize seedData
   ProgramInfoModel() {
     //Sunday
     _seedData.add(ProgramInformation(
@@ -238,10 +239,6 @@ class ProgramInfoModel with ChangeNotifier {
         totalEpisode: 12,
         progress: List<bool>.filled(12, false)));
 
-    print(seedData.where((element) => element.weekDays == DateTime.sunday));
-
-    // print(seedData);
-    // print(seedData.length);
   }
 
   List<ProgramInformation> get seedData => _seedData;
