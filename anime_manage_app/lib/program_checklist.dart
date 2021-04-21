@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'database.dart';
-import 'seedData.dart';
 
 class ProgramChecklists extends StatelessWidget {
   @override
@@ -38,75 +38,71 @@ class ProgramChecklists extends StatelessWidget {
           ),
           body: TabBarView(
             children: <Widget>[
-              programListWeekDay(DateTime.sunday),
-              programListWeekDay(DateTime.monday),
-              programListWeekDay(DateTime.tuesday),
-              programListWeekDay(DateTime.wednesday),
-              programListWeekDay(DateTime.thursday),
-              programListWeekDay(DateTime.friday),
-              programListWeekDay(DateTime.saturday)
+              programListWeekDay(context, DateTime.sunday),
+              programListWeekDay(context, DateTime.monday),
+              programListWeekDay(context, DateTime.tuesday),
+              programListWeekDay(context, DateTime.wednesday),
+              programListWeekDay(context, DateTime.thursday),
+              programListWeekDay(context, DateTime.friday),
+              programListWeekDay(context, DateTime.saturday)
             ],
           ),
         ));
   }
 }
 
-Widget programListWeekDay(int? weekday) {
-  final List<ProgramInformation> _filterd =
-      seedData.where((element) => element.weekDays == weekday).toList();
+Widget programListWeekDay(BuildContext context, int? weekday) {
+  final List<ProgramInformation>? _titleList =
+      Provider.of<ProgramInfoModel>(context, listen: false)
+          .searchByWeekday(weekday);
 
   return ListView.builder(
       padding: const EdgeInsets.all(8),
-      itemCount: _filterd.length,
+      itemCount: _titleList?.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
             leading: Icon(Icons.beach_access), //<=change TV icon
-            title: Text("${_filterd[index].title}"),
-            subtitle: Text('Total Episodes ${_filterd[index].totalEpisode}'),
+            title: Text("${_titleList?[index].title}"),
+            subtitle: Text('Total Episodes ${_titleList?[index].totalEpisode}'),
             trailing: Icon(Icons.favorite),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute<void>(
                 builder: (BuildContext context) =>
-                    _CheckboxListPage(contentInfo: _filterd[index]),
+                    _checkboxListPage(contentInfo: _titleList?[index]),
               ));
             });
       });
 }
 
-class _CheckboxListPage extends StatelessWidget {
-  ProgramInformation contentInfo;
+class _checkboxListPage extends StatelessWidget {
+  ProgramInformation? contentInfo;
 
-  _CheckboxListPage({required this.contentInfo});
+  _checkboxListPage({required this.contentInfo});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(contentInfo.title!)),
-        body: ListView.builder(
-            padding: const EdgeInsets.all(8),
-            itemCount: contentInfo.progress!.length,
-            itemBuilder: (BuildContext context, int index) {
-              return CheckboxListTile(
-                title: Text('Episode ${index + 1}'),
-                // subtitle: Text('hoge'),
-                secondary: Icon(Icons.beach_access),
-                controlAffinity: ListTileControlAffinity.platform,
-                onChanged: (bool? value) {
-                  print("${contentInfo.progress![index]}\n");
-                  if (value!)
-                    contentInfo.progress![index] = false;
-                  else
-                    contentInfo.progress![index] = true;
-                  print("${contentInfo.progress![index]}\n");
-                },
-                value: contentInfo.progress![index],
-                activeColor: Colors.green,
-                checkColor: Colors.white,
-              );
-            }));
+        appBar: AppBar(title: Text(contentInfo!.title!)),
+        body: Consumer<ProgramInfoModel>(builder:
+            (BuildContext context, ProgramInfoModel value, Widget? child) {
+          return ListView.builder(
+              padding: const EdgeInsets.all(8),
+              itemCount: contentInfo!.progress!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return CheckboxListTile(
+                  title: Text('Episode ${index + 1}'),
+                  // subtitle: Text('hoge'),
+                  secondary: Icon(Icons.beach_access),
+                  controlAffinity: ListTileControlAffinity.platform,
+                  onChanged: (bool? value) {
+                    Provider.of<ProgramInfoModel>(context, listen: false)
+                        .toggleProgress(contentInfo!, index);
+                  },
+                  value: contentInfo!.progress![index],
+                  activeColor: Colors.green,
+                  checkColor: Colors.white,
+                );
+              });
+        }));
   }
-}
-
-class checkBoxTiles with ChangeNotifier{
-
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'program_checklist.dart';
-import 'seedData.dart';
 import 'database.dart';
 
 void main() => runApp(MyApp());
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
         home: MyHomePage(pages: _pagesList)),
         providers: [
           ChangeNotifierProvider(
-            create: (context) => CheckboxList(),
+            create: (context) => ProgramInfoModel(),
             )
         ],
     );
@@ -45,8 +44,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    initialData();
-    // TODO: implement initState
     _showPage = widget.pages?['Program Checklist'];
     for (var key in widget.pages!.keys) _pageKeyList.add(key);
     super.initState();
