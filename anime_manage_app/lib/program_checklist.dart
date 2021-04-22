@@ -38,40 +38,47 @@ class ProgramChecklists extends StatelessWidget {
           ),
           body: TabBarView(
             children: <Widget>[
-              programListWeekDay(context, DateTime.sunday),
-              programListWeekDay(context, DateTime.monday),
-              programListWeekDay(context, DateTime.tuesday),
-              programListWeekDay(context, DateTime.wednesday),
-              programListWeekDay(context, DateTime.thursday),
-              programListWeekDay(context, DateTime.friday),
-              programListWeekDay(context, DateTime.saturday)
+              ProgramListWeekDay(DateTime.sunday),
+              ProgramListWeekDay(DateTime.monday),
+              ProgramListWeekDay(DateTime.tuesday),
+              ProgramListWeekDay(DateTime.wednesday),
+              ProgramListWeekDay(DateTime.thursday),
+              ProgramListWeekDay(DateTime.friday),
+              ProgramListWeekDay(DateTime.saturday)
             ],
           ),
         ));
   }
 }
 
-Widget programListWeekDay(BuildContext context, int? weekday) {
-  final List<ProgramInformation>? _titleList =
-      Provider.of<ProgramInfoModel>(context, listen: false)
-          .searchByWeekday(weekday);
+class ProgramListWeekDay extends StatelessWidget {
+  final int? weekday;
+  ProgramListWeekDay(this.weekday);
 
-  return ListView.builder(
-      padding: const EdgeInsets.all(8),
-      itemCount: _titleList?.length,
-      itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-            leading: Icon(Icons.beach_access), //<=change TV icon
-            title: Text("${_titleList?[index].title}"),
-            subtitle: Text('Total Episodes ${_titleList?[index].totalEpisode}'),
-            trailing: Icon(Icons.favorite),
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute<void>(
-                builder: (BuildContext context) =>
-                    _CheckboxListPage(contentInfo: _titleList?[index]),
-              ));
-            });
-      });
+  @override
+  Widget build(BuildContext context) {
+    final List<ProgramInformation>? _titleList =
+        Provider.of<ProgramInfoModel>(context, listen: false)
+            .searchByWeekday(weekday);
+
+    return ListView.builder(
+        padding: const EdgeInsets.all(8),
+        itemCount: _titleList?.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+              leading: Icon(Icons.beach_access), //<=change TV icon
+              title: Text("${_titleList?[index].title}"),
+              subtitle:
+                  Text('Total Episodes ${_titleList?[index].totalEpisode}'),
+              trailing: Icon(Icons.favorite),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute<void>(
+                  builder: (BuildContext context) =>
+                      _CheckboxListPage(contentInfo: _titleList?[index]),
+                ));
+              });
+        });
+  }
 }
 
 class _CheckboxListPage extends StatelessWidget {

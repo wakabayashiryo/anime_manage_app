@@ -13,18 +13,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      child:MaterialApp(
-        title: 'Anime Manager(Beta)',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-        ),
-        debugShowCheckedModeBanner: true,
-        home: MyHomePage(pages: _pagesList)),
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => ProgramInfoModel(),
-            )
-        ],
+      child: MaterialApp(
+          title: 'Anime Manager(Beta)',
+          theme: ThemeData(
+            primarySwatch: Colors.green,
+          ),
+          debugShowCheckedModeBanner: true,
+          home: MyHomePage(pages: _pagesList)),
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ProgramInfoModel(),
+        )
+      ],
     );
   }
 }
