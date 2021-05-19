@@ -8,7 +8,8 @@ import 'database.dart';
 class DatabaseHelper {
   final String tableName = "titleData";
   int? version = 1;
-  final String tableStructure = 'id INTEGER PRIMARY KEY, title TEXT,weekDays INTEGER, progress TEXT';
+  final String tableStructure =
+      'id INTEGER PRIMARY KEY, title TEXT,weekDays INTEGER, progress TEXT';
 
   // make this a singleton class
   DatabaseHelper._createInstance();
@@ -41,12 +42,13 @@ class DatabaseHelper {
 
   Future<int?> update(ProgramInformation info) async {
     Database? db = await this.database;
-    return await db!.update(tableName, info.toMap(),where: 'id = ?',whereArgs: [info.id]);
+    return await db!
+        .update(tableName, info.toMap(), where: 'id = ?', whereArgs: [info.id]);
   }
 
   Future<int?> delete(int id) async {
     Database? db = await this.database;
-    return await db!.delete(tableName, where: 'id = ?',whereArgs: [id]);
+    return await db!.delete(tableName, where: 'id = ?', whereArgs: [id]);
   }
 
   Future<List<Map<String, dynamic>>> queryAllRows() async {
@@ -57,10 +59,10 @@ class DatabaseHelper {
   //get ths 'Map List' [List<Map>] and convert it to 'ProgramInformation List' [List<ProgramInformation>]
   Future<List<ProgramInformation>> getDBlist() async {
     var mapList = await queryAllRows();
-    int listCount = mapList.length;
+    final int listCount = mapList.length;
     List<ProgramInformation> infoList = [];
 
-    for (int index = 0; index < listCount; listCount++)
+    for (int index = 0; index < listCount; index++)
       infoList.add(ProgramInformation.fromMapObject(mapList[index]));
 
     return infoList;
