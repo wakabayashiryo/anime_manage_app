@@ -4,20 +4,18 @@ import 'package:flutter/material.dart';
 class ProgramInformation {
   int? id;
   String? title;
-  int? totalEpisode;
   int? weekDays;
   List<bool>? progress = [];
 
   @override
   String toString() {
-    return '{ ${this.id} ${this.title}, ${this.weekDays}, ${this.totalEpisode}, ${this.progress} }';
+    return '{ ${this.id} ${this.title}, ${this.weekDays}, ${this.progress} }';
   }
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'title': title,
-      'totalEpisode': totalEpisode,
       'weekDays': weekDays,
       'progress': '$progress' //Convert String Data for sqflite
     };
@@ -44,13 +42,12 @@ class ProgramInformation {
   ProgramInformation.fromMapObject(Map<String, dynamic> map) {
     this.id = map['id'];
     this.title = map['title'];
-    this.totalEpisode = map['totalEpisode'];
     this.weekDays = map['weekDays'];
     this.progress = fromBoolString2List(map['progress']);
   }
 
   ProgramInformation(
-      {this.id, this.title, this.weekDays, this.totalEpisode, this.progress});
+      {this.id, this.title, this.weekDays, this.progress});
 }
 
 class ProgramInfoModel with ChangeNotifier {
@@ -63,27 +60,22 @@ class ProgramInfoModel with ChangeNotifier {
     _listData.add(ProgramInformation(
         title: '文豪ストレイドッグス　わん！',
         weekDays: DateTime.sunday,
-        totalEpisode: 12,
         progress: [false]));
     _listData.add(ProgramInformation(
         title: 'けいおん！！',
         weekDays: DateTime.sunday,
-        totalEpisode: 12,
         progress: [false]));
     _listData.add(ProgramInformation(
         title: 'OBSOLETE',
         weekDays: DateTime.sunday,
-        totalEpisode: 12,
         progress: [false]));
     _listData.add(ProgramInformation(
         title: 'のんのんびより　のんすとっぷ',
         weekDays: DateTime.sunday,
-        totalEpisode: 12,
         progress: [false]));
     _listData.add(ProgramInformation(
         title: 'おそ松さん',
         weekDays: DateTime.sunday,
-        totalEpisode: 12,
         progress: [false]));
   }
 
@@ -94,14 +86,12 @@ class ProgramInfoModel with ChangeNotifier {
   }
 
   void createTitle(ProgramInformation data) {
-    // _listData.add(data);
     dbHelper.insert(data);
     refreshData();
     notifyListeners();
   }
 
   void deleteTitle(int index) {
-    // _listData.remove(index);
     dbHelper.delete(index);
     refreshData();
     notifyListeners();
@@ -133,191 +123,191 @@ class ProgramInfoModel with ChangeNotifier {
 //     title: '文豪ストレイドッグス　わん！',
 //     weekDays: DateTime.sunday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'けいおん！！',
 //     weekDays: DateTime.sunday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'OBSOLETE',
 //     weekDays: DateTime.sunday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'のんのんびより　のんすとっぷ',
 //     weekDays: DateTime.sunday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'おそ松さん',
 //     weekDays: DateTime.sunday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 
 // //Monday
 // _listData.add(ProgramInformation(
 //     title: '進撃の巨人 The Final Season',
 //     weekDays: DateTime.monday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: '7SEED',
 //     weekDays: DateTime.monday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'SHIROBAKO',
 //     weekDays: DateTime.monday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'シュタインズゲート',
 //     weekDays: DateTime.monday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'ウマ娘　プリティーダービー　Season 2',
 //     weekDays: DateTime.monday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 
 // //tuesday
 // _listData.add(ProgramInformation(
 //     title: '裏世界ピクニック',
 //     weekDays: DateTime.tuesday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'はたらく細胞!!',
 //     weekDays: DateTime.tuesday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'はたらく細胞BLACK',
 //     weekDays: DateTime.tuesday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'ワールドウィッチーズ発進しますっ!',
 //     weekDays: DateTime.tuesday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'ワンダーエッグ・プライオリティ',
 //     weekDays: DateTime.tuesday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'Re:ゼロから始めるい世界生活 第2期',
 //     weekDays: DateTime.tuesday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 
 // //Wednesday
 // _listData.add(ProgramInformation(
 //     title: '七つの大罪憤怒の審判',
 //     weekDays: DateTime.wednesday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'ゆるキャン△ SEASON2',
 //     weekDays: DateTime.wednesday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: '約束のネバーランド Season2',
 //     weekDays: DateTime.wednesday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: '弱キャラ友崎くん',
 //     weekDays: DateTime.wednesday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'アズールレーン　びそくぜんしんっ!',
 //     weekDays: DateTime.wednesday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: '転生したらスライムだった件　第２期　第１部',
 //     weekDays: DateTime.wednesday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 
 // //Thursday
 // _listData.add(ProgramInformation(
 //     title: 'BEASTARS 第２期',
 //     weekDays: DateTime.thursday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'ホリミヤ',
 //     weekDays: DateTime.thursday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: '宇宙よりも遠い場所',
 //     weekDays: DateTime.thursday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: '八十亀ちゃんかんさつにっき　３さつめ',
 //     weekDays: DateTime.thursday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 
 // //Friday
 // _listData.add(ProgramInformation(
 //     title: '五等分の花嫁ff',
 //     weekDays: DateTime.friday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: '天地創造デザイン部',
 //     weekDays: DateTime.friday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'ゲキドル',
 //     weekDays: DateTime.friday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'ガンゲイル・オンライン',
 //     weekDays: DateTime.friday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'ガウリール・ドロップアウト',
 //     weekDays: DateTime.friday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 
 // //Saturday
 // _listData.add(ProgramInformation(
 //     title: '無職転生　〜異世界行ったら本気だす〜',
 //     weekDays: DateTime.saturday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: 'きんいろもざいく',
 //     weekDays: DateTime.saturday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: '呪術廻戦',
 //     weekDays: DateTime.saturday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: '<物語>シリーズ　セカンドシーズン',
 //     weekDays: DateTime.saturday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));
 // _listData.add(ProgramInformation(
 //     title: '蜘蛛ですが、なにか?',
 //     weekDays: DateTime.saturday,
 //     totalEpisode: 12,
-//     progress: List<bool>.filled(12, false)));
+//     progress: [false]));

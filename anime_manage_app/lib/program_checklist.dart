@@ -69,7 +69,7 @@ class ProgramListWeekDay extends StatelessWidget {
               leading: Icon(Icons.beach_access), //<=change TV icon
               title: Text("${_titleList?[index].title}"),
               subtitle:
-                  Text('Total Episodes ${_titleList?[index].totalEpisode}'),
+                  Text('Watched Episodes ${_titleList?[index].progress!.length}'),
               trailing: Icon(Icons.favorite),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute<void>(
