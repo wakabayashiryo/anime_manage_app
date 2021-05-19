@@ -6,7 +6,7 @@ class ProgramInformation {
   String? title;
   int? totalEpisode;
   int? weekDays;
-  List<bool>? progress;
+  List<bool>? progress = [];
 
   @override
   String toString() {
@@ -60,12 +60,37 @@ class ProgramInfoModel with ChangeNotifier {
   //initialize seedData
   ProgramInfoModel() {
     refreshData();
+    _listData.add(ProgramInformation(
+        title: '文豪ストレイドッグス　わん！',
+        weekDays: DateTime.sunday,
+        totalEpisode: 12,
+        progress: [false]));
+    _listData.add(ProgramInformation(
+        title: 'けいおん！！',
+        weekDays: DateTime.sunday,
+        totalEpisode: 12,
+        progress: [false]));
+    _listData.add(ProgramInformation(
+        title: 'OBSOLETE',
+        weekDays: DateTime.sunday,
+        totalEpisode: 12,
+        progress: [false]));
+    _listData.add(ProgramInformation(
+        title: 'のんのんびより　のんすとっぷ',
+        weekDays: DateTime.sunday,
+        totalEpisode: 12,
+        progress: [false]));
+    _listData.add(ProgramInformation(
+        title: 'おそ松さん',
+        weekDays: DateTime.sunday,
+        totalEpisode: 12,
+        progress: [false]));
   }
 
   List<ProgramInformation> get listData => _listData;
 
   void refreshData() async {
-    _listData = await dbHelper.getDBlist();
+    // _listData = await dbHelper.getDBlist();
   }
 
   void createTitle(ProgramInformation data) {
@@ -90,6 +115,10 @@ class ProgramInfoModel with ChangeNotifier {
 
   void toggleProgress(ProgramInformation data, int progindex) {
     data.progress?[progindex] = !data.progress![progindex];
+    if(data.progress?[data.progress!.length-1]==true){
+      data.progress?.add(false);
+    }
+
     refreshData();
     notifyListeners();
   }

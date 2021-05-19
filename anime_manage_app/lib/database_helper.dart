@@ -8,13 +8,7 @@ import 'database.dart';
 class DatabaseHelper {
   final String tableName = "titleData";
   int? version = 1;
-  final String tableStructure = """
-  id INTEGER PRIMARY KEY, 
-  title TEXT, 
-  totalEpisode INTEGER,
-  weekDays INTEGER,
-  progress TEXT,
-  """;
+  final String tableStructure = 'id INTEGER PRIMARY KEY, title TEXT, totalEpisode INTEGER, weekDays INTEGER, progress TEXT';
 
   // make this a singleton class
   DatabaseHelper._createInstance();
@@ -37,11 +31,7 @@ class DatabaseHelper {
   }
 
   Future _onCreate(Database db, int version) async {
-    await db.execute('''
-          CREATE TABLE 
-          $tableName
-          ($tableStructure)
-          ''');
+    await db.execute('CREATE TABLE $tableName ($tableStructure)');
   }
 
   Future<int?> insert(ProgramInformation info) async {
